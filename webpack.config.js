@@ -1,7 +1,6 @@
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const webpack = require('webpack');
 const path = require('path');
-require('bootstrap');
 
 module.exports = { 
     entry: {
@@ -17,7 +16,7 @@ module.exports = {
     module: {
         rules: [
           {
-            test: /\.jpg$/,
+            test: /\.(png|jpe?g|gif)$/i,
             use: [
               {
                 loader: 'file-loader',
@@ -37,5 +36,14 @@ module.exports = {
           }
         ]
       },
+      plugins: [
+        new webpack.ProvidePlugin({
+          $: "jquery",
+          jQuery: "jquery"
+        }),
+        new BundleAnalyzerPlugin({
+          analyzerMode: "static", // the report outputs to an HTML file in the dist folder
+        })
+      ],    
     mode: 'development'
-}
+};
